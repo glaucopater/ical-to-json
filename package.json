@@ -1,0 +1,26 @@
+{
+  "name": "stackblitz-starters-av1gnt",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "11.11.3",
+    "@emotion/styled": "11.11.0",
+    "@mui/material": "5.15.5",
+    "@types/ical": "0.8.3",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    "ical": "0.8.0",
+    "luxon": "^3.4.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "react-scripts": "latest"
+  }
+}
