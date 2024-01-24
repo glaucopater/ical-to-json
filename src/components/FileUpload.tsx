@@ -7,7 +7,7 @@ import {
   Button,
 } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { parseICalData } from "../util";
+import { downloadJsonFile, parseICalData, readAsText } from "../util";
 
 export default function FileUpload() {
   const [icsFile, setIcsFile] = useState<File | null>(null);
@@ -15,8 +15,6 @@ export default function FileUpload() {
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    console.log("handleFileChange", file);
-    console.log(await readAsText(file));
     setIcsFile(file);
     convertICSToJSON();
   };
@@ -27,10 +25,7 @@ export default function FileUpload() {
       try {
         const icsData = await readAsText(icsFile);
         console.log(icsData);
-        //const jcalData = ICAL.parseICS(icsData);
-
         const jcalData = parseICalData(icsData);
-
         setJsonContent(jcalData);
       } catch (error) {
         console.error("Error converting ICS to JSON:", error.message);
@@ -38,35 +33,8 @@ export default function FileUpload() {
     }
   };
 
-  const readAsText = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = () => reject(new Error("Error reading file"));
-        reader.readAsText(file);
-      }
-    });
-  };
-
   const handleDownload = () => {
     downloadJsonFile(jsonContent);
-  };
-
-  const downloadJsonFile = (data: object) => {
-    const jsonContent = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonContent], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const timestamp = new Date().toISOString().replace(/[-:]/g, "");
-    const fileName = "calendar" + timestamp + ".json";
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   return (
