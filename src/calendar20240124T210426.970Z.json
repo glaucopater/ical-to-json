@@ -1,0 +1,28 @@
+[
+  {
+    "SUMMARY": "Access-A-Ride Pickup",
+    "DTSTART;TZID=AMERICA/NEW_YORK": "20130802T103400",
+    "DTEND;TZID=AMERICA/NEW_YORK": "20130802T110400",
+    "LOCATION": "1000 Broadway Ave.\\, Brooklyn",
+    "DESCRIPTION": "Pickup Reminder",
+    "STATUS": "CONFIRMED",
+    "SEQUENCE": "3",
+    "BEGIN": "VALARM",
+    "TRIGGER": "-PT10M",
+    "ACTION": "DISPLAY",
+    "END": "VALARM"
+  },
+  {
+    "SUMMARY": "Access-A-Ride Pickup",
+    "DTSTART;TZID=AMERICA/NEW_YORK": "20130802T200000",
+    "DTEND;TZID=AMERICA/NEW_YORK": "20130802T203000",
+    "LOCATION": "900 Jay St.\\, Brooklyn",
+    "DESCRIPTION": "Pickup Reminder",
+    "STATUS": "CONFIRMED",
+    "SEQUENCE": "3",
+    "BEGIN": "VALARM",
+    "TRIGGER": "-PT10M",
+    "ACTION": "DISPLAY",
+    "END": "VALARM"
+  }
+]

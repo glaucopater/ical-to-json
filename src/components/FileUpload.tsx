@@ -5,41 +5,47 @@ import {
   Typography,
   Input,
   Button,
-} from '@mui/material';
-import { ChangeEvent, useState } from 'react';
-import ICAL from 'ical';
+} from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import { parseICalData } from "../util";
 
 export default function FileUpload() {
   const [icsFile, setIcsFile] = useState<File | null>(null);
   const [jsonContent, setJsonContent] = useState<any | null>(null);
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    console.log(file);
+    console.log("handleFileChange", file);
+    console.log(await readAsText(file));
     setIcsFile(file);
     convertICSToJSON();
   };
 
   const convertICSToJSON = async () => {
-    console.log(icsFile);
+    console.log("convertICSToJSON", icsFile);
     if (icsFile) {
       try {
         const icsData = await readAsText(icsFile);
-        const jcalData = ICAL.parseICS(icsData);
+        console.log(icsData);
+        //const jcalData = ICAL.parseICS(icsData);
+
+        const jcalData = parseICalData(icsData);
 
         setJsonContent(jcalData);
       } catch (error) {
-        console.error('Error converting ICS to JSON:', error.message);
+        console.error("Error converting ICS to JSON:", error.message);
       }
     }
   };
 
   const readAsText = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => reject(new Error('Error reading file'));
-      reader.readAsText(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => reject(new Error("Error reading file"));
+        reader.readAsText(file);
+      }
     });
   };
 
@@ -49,12 +55,12 @@ export default function FileUpload() {
 
   const downloadJsonFile = (data: object) => {
     const jsonContent = JSON.stringify(data, null, 2);
-    const blob = new Blob([jsonContent], { type: 'application/json' });
+    const blob = new Blob([jsonContent], { type: "application/json" });
     const url = URL.createObjectURL(blob);
-    const timestamp = new Date().toISOString().replace(/[-:]/g, '');
-    const fileName = 'calendar' + timestamp + '.json';
+    const timestamp = new Date().toISOString().replace(/[-:]/g, "");
+    const fileName = "calendar" + timestamp + ".json";
 
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = fileName;
     document.body.appendChild(a);
@@ -74,7 +80,7 @@ export default function FileUpload() {
                 Upload your .ics file and convert it to JSON format.
               </Typography>
               <Input
-                accept=".ics"
+                // accept=".ics"
                 id="ics-file"
                 type="file"
                 onChange={handleFileChange}
