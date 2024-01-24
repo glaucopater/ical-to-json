@@ -1,5 +1,7 @@
 # iCal to JSON Converter
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/471754c7-082d-497f-8fb1-ef4365c7fc63/deploy-status)](https://app.netlify.com/sites/tubular-daffodil-f8202a/deploys)
+
 This is a simple React app that allows users to convert an iCal (ICS) file to JSON format.
 
 ## Table of Contents
